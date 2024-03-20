@@ -49,7 +49,7 @@ router.post("/", (req, res) => {
 
 		const response = await file.save();
 
-		// Sending url to client
+		// Sending url to client (url ke liye)
 		return res.json({
 			file: `${process.env.APP_BASE_URL}/files/${response.uuid}`,
 		});
