@@ -1,31 +1,11 @@
 const express = require("express");
-const multer = require("multer");
-const path = require("path");
 const File = require("../models/file");
 const { v4: uuid4 } = require("uuid");
 const sendMail = require("../services/emailService");
+const upload = require("../services/multer")
 
 const router = express.Router();
 
-// Multer config
-const storage = multer.diskStorage({
-	destination: (req, file, cb) => {
-		return cb(null, "uploads/");
-	},
-	filename: (req, file, cb) => {
-		// 22-1234567890.png
-		const uniqueName = `${
-			Date.now() + "-" + Math.round(Math.random() * 1e9)
-		}${path.extname(file.originalname)}`;
-
-		cb(null, uniqueName);
-	},
-});
-
-const upload = multer({
-	storage,
-	limits: { fileSize: 1000000 * 100 }, //100Mb
-}).single("myFile");
 
 router.post("/", (req, res) => {
 	// store files
